@@ -17,7 +17,7 @@ npx playwright install
 
 ## Running tests
 
-To run all scripts:
+To run all tests:
 
 ```bash
 npx playwright test
