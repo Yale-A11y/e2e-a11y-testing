@@ -17,6 +17,14 @@ npx playwright install
 
 ## Running tests
 
-To run all scripts: `npx playwright test`
+To run all scripts:
 
-To run a specific test file: `npx playwright test <relative_path_to_file>`
+```bash
+npx playwright test
+```
+
+To run a specific test file:
+
+```bash
+npx playwright test <relative_path_to_file>
+```
