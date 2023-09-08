@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+curl "$1/sitemap.xml" 2>/dev/null | xmllint --xpath '//*[local-name()="loc"]/text()' --format - > sitemap.links
+
+if [ ! -f sitemap.links ]; then
+    echo "Could not retrieve sitemap.xml"
+    exit 1
+fi
+
+echo "Retrieved sitemap.links"

@@ -134,3 +134,6 @@ dist
 
 # Mac directory meta information files
 .DS_Store
+
+# The sitemap links that you can generate
+sitemap.links
