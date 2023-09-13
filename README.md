@@ -21,14 +21,32 @@ npx playwright install
 
 ## Running tests
 
-To run all tests:
+To run axe tests on a remote site containing a sitemap.xml file:
+
+```bash
+npm run a11y <base_url>
+```
+
+`base_url`: The url of the site containing the sitemap.xml file (i.e.
+https://www.example.com)
+
+To retrieve the sitemap links into a file called `sitemap.links`:
+```bash
+npm run sitemap <base_url>
+```
+
+`base_url`: The url of the site containing the sitemap.xml file (i.e.
+https://www.example.com)
+
+To manually run all tests:
 
 ```bash
 npx playwright test
 ```
 
-To run a specific test file:
+To manually run a specific test file:
 
 ```bash
 npx playwright test <relative_path_to_file>
 ```
+
