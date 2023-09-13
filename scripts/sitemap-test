@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+./scripts/retrieveSitemap "$1"
+playwright test ./tests/axe-sitemap.spec.ts
