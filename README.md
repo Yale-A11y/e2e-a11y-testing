@@ -6,6 +6,7 @@ Recommended end-to-end accessibility testing for web projects
 
 * [nodejs: >= 16](https://nodejs.org/en)
 * [npm](https://www.npmjs.com)
+* [xmllint](https://gitlab.gnome.org/GNOME/libxml2/-/wikis/home)
 
 ## Installation
 
