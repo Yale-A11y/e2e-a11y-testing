@@ -10,7 +10,8 @@
   "scripts": {
     "a11y": "./scripts/sitemap-test",
     "sitemap": "./scripts/retrieveSitemap",
-    "sitemap-alt": "node ./sitemap.js"
+    "sitemap-alt": "node ./sitemap.js",
+    "visreg": "playwright test ./tests/visreg-sitemap.spec.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.37.1"

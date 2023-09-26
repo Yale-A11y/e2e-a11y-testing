@@ -137,3 +137,4 @@ dist
 
 # The sitemap links that you can generate
 sitemap.links
+tests/visreg-sitemap.spec.ts-snapshots/
