@@ -8,10 +8,10 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "a11y": "./scripts/sitemap-test",
+    "a11y": "./scripts/a11y-sitemap-test",
     "sitemap": "./scripts/retrieveSitemap",
     "sitemap-alt": "node ./sitemap.js",
-    "visreg": "playwright test ./tests/visreg-sitemap.spec.ts"
+    "visreg": "./scripts/visreg-sitemap-test"
   },
   "devDependencies": {
     "@playwright/test": "^1.37.1"
