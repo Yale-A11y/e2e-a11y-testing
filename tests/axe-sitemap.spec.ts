@@ -11,7 +11,7 @@ const axe_tags = [
   // Uncomment to try WCAG 2.2 rules
   // "wcag22a",
   // "wcag22aa",
-  "best-practice",      // Common accessibility best practices
+  "best-practice", // Common accessibility best practices
   // "ACT",             // W3C approved Accessibility Conformance Testing Rules
   // "experimental",    // Cutting-edge rules
 ];
@@ -53,11 +53,10 @@ const outputNodes = (nodes: NodeResult[]) => {
 };
 
 const outputNode = (node: NodeResult) => {
-    let { html, target } = node;
+  let { html, target } = node;
 
-    console.log(`  ${target}`);
-    console.log(`  ${html}`);
-    console.log(`  ----------------`);
-    console.log(`  ${node.failureSummary}`);
+  console.log(`  ----------------`);
+  console.log(`  ${target}`);
+  console.log(`  ${html}`);
+  console.log(`  ${node.failureSummary}`);
 };
-
