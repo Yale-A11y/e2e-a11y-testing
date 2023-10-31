@@ -3,6 +3,19 @@ import AxeBuilder from "@axe-core/playwright";
 import type { Result, NodeResult } from "axe-core";
 import fs from "fs";
 
+const axe_tags = [
+  "wcag2a",
+  "wcag2aa",
+  "wcag21a",
+  "wcag21aa",
+  // Uncomment to try WCAG 2.2 rules
+  // "wcag22a",
+  // "wcag22aa",
+  "best-practice", // Common accessibility best practices
+  // "ACT",             // W3C approved Accessibility Conformance Testing Rules
+  // "experimental",    // Cutting-edge rules
+];
+
 const links = fs
   .readFileSync("sitemap.links", "utf-8")
   .split("\n")
@@ -11,7 +24,7 @@ const links = fs
 links.forEach((link) => {
   test(`Accessibility test for ${link}`, async ({ page }) => {
     await page.goto(link);
-    const results = await new AxeBuilder({ page }).analyze();
+    const results = await new AxeBuilder({ page }).withTags(axe_tags).analyze();
     if (results.violations.length > 0) {
       console.log(`Violations for ${link}`);
       outputViolations(results.violations);
@@ -40,11 +53,10 @@ const outputNodes = (nodes: NodeResult[]) => {
 };
 
 const outputNode = (node: NodeResult) => {
-    let { html, target } = node;
+  let { html, target } = node;
 
-    console.log(`  ${target}`);
-    console.log(`  ${html}`);
-    console.log(`  ----------------`);
-    console.log(`  ${node.failureSummary}`);
+  console.log(`  ----------------`);
+  console.log(`  ${target}`);
+  console.log(`  ${html}`);
+  console.log(`  ${node.failureSummary}`);
 };
-
