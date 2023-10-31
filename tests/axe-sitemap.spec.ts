@@ -8,9 +8,12 @@ const axe_tags = [
   "wcag2aa",
   "wcag21a",
   "wcag21aa",
-  "wcag22a",
-  "wcag22aa",
-  "best-practice",
+  // Uncomment to try WCAG 2.2 rules
+  // "wcag22a",
+  // "wcag22aa",
+  "best-practice",      // Common accessibility best practices
+  // "ACT",             // W3C approved Accessibility Conformance Testing Rules
+  // "experimental",    // Cutting-edge rules
 ];
 
 const links = fs
