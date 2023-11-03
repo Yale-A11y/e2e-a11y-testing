@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test as base, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import type { Result, NodeResult } from "axe-core";
 import fs from "fs";
@@ -16,6 +16,30 @@ const axe_tags = [
   // "experimental",    // Cutting-edge rules
 ];
 
+// goto to do an accessibility check afterward.
+export const test = base.extend({
+  page: async ({ page }, use) => {
+    page._goto = page.goto;
+    page.goto = async (url: string) => {
+      return new Promise(async (resolve, reject) => {
+        try {
+          await page._goto(url);
+          const results = await new AxeBuilder({ page }).withTags(axe_tags).analyze();
+          if (results.violations.length > 0) {
+            console.log(`Violations for ${url}`);
+            outputViolations(results.violations);
+          }
+          expect(results.violations.length).toBe(0);
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      });
+    };
+    await use(page);
+  },
+});
+
 const links = fs
   .readFileSync("sitemap.links", "utf-8")
   .split("\n")
@@ -24,12 +48,6 @@ const links = fs
 links.forEach((link) => {
   test(`Accessibility test for ${link}`, async ({ page }) => {
     await page.goto(link);
-    const results = await new AxeBuilder({ page }).withTags(axe_tags).analyze();
-    if (results.violations.length > 0) {
-      console.log(`Violations for ${link}`);
-      outputViolations(results.violations);
-    }
-    expect(results.violations.length).toBe(0);
   });
 });
 
