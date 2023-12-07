@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".", // This must be specified if "paths" is.
+    "paths": {
+      "@support/*": ["support/*"] // This mapping is relative to "baseUrl".
+    }
+  }
+}
+
