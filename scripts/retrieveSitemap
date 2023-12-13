@@ -2,6 +2,11 @@
 
 curl --insecure "$1" 2>/dev/null | xmllint --xpath '//*[local-name()="loc"]/text()' --format - > sitemap.links
 
+if [ $? -ne 0 ]; then
+    echo "Could not retrieve sitemap.xml from url, assuming this is a one-off"
+    echo "$1" > sitemap.links
+fi
+
 if [ ! -f sitemap.links ]; then
     echo "Could not retrieve sitemap.xml"
     exit 1
