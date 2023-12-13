@@ -42,6 +42,11 @@ npm run sitemap <base_url>
 `base_url`: The url of the site containing the sitemap.xml file (i.e.
 https://www.example.com)
 
+To run axe tests against one specific URL:
+```bash
+npm run ally <url>
+```
+
 To manually run all tests:
 
 ```bash
@@ -52,6 +57,11 @@ To manually run a specific test file:
 
 ```bash
 npx playwright test <relative_path_to_file>
+```
+
+To test one page, you'll want to populate it inside of a new sitemap.links file:
+```bash
+cat https://pageToTest.com/page1 > sitemap.links
 ```
 
 To run visual regression tests on a sitemap:
