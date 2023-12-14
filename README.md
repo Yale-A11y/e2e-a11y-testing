@@ -47,6 +47,8 @@ To run axe tests against one specific URL:
 npm run ally <url>
 ```
 
+`url`: The url in this case is the actual page you'd like to test (i.e. https://www.example.com/about_us)
+
 To manually run all tests:
 
 ```bash
@@ -59,15 +61,19 @@ To manually run a specific test file:
 npx playwright test <relative_path_to_file>
 ```
 
-To test one page, you'll want to populate it inside of a new sitemap.links file:
-```bash
-cat https://pageToTest.com/page1 > sitemap.links
-```
-
 To run visual regression tests on a sitemap:
 ```bash
 npm run visreg <base_url>
 ```
+`base_url`: The url of the site containing the sitemap.xml file (i.e.
+https://www.example.com)
+
+To run visual regression tests on one URL:
+```bash
+npm run visreg <url>
+```
+
+`url`: The url in this case is the actual page you'd like to test (i.e. https://www.example.com/about_us)
 
 Note: The first time you run the visual regression, it'll attempt to create
 baselines to test against.  The times after that will be actual comparisons to
