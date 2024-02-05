@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
 
-./scripts/retrieveSitemap "$1"
+if [[ $1 != *.xml ]]; then
+    echo "$1" > ./sitemap.links
+else
+    ./scripts/retrieveSitemap "$1"
+fi
+
 playwright test ./tests/axe-sitemap.spec.ts
