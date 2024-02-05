@@ -25,29 +25,31 @@ npx playwright install
 
 ## Running tests
 
-To run axe tests on a remote site containing a sitemap.xml file:
+To run axe tests for a page/site:
 
 ```bash
-npm run a11y <base_url>
+npm run a11y <url>
 ```
 
-`base_url`: The url of the site containing the sitemap.xml file (i.e.
-https://www.example.com)
+`url`: The url to test or the sitemap.xml to test a list of links with.
+
+
+To run visual regression tests for a page/site:
+```bash
+npm run visreg <url>
+```
+`url`: The url to test or the sitemap.xml to test a list of links with.
+
+Note: The first time you run the visual regression, it'll attempt to create
+baselines to test against.  The times after that will be actual comparisons to
+the original.
 
 To retrieve the sitemap links into a file called `sitemap.links`:
 ```bash
-npm run sitemap <base_url>
+npm run sitemap <url>
 ```
 
-`base_url`: The url of the site containing the sitemap.xml file (i.e.
-https://www.example.com)
-
-To run axe tests against one specific URL:
-```bash
-npm run ally <url>
-```
-
-`url`: The url in this case is the actual page you'd like to test (i.e. https://www.example.com/about_us)
+`url`: The url to test or the sitemap.xml to test a list of links with.
 
 To manually run all tests:
 
@@ -61,27 +63,14 @@ To manually run a specific test file:
 npx playwright test <relative_path_to_file>
 ```
 
-To run visual regression tests on a sitemap:
-```bash
-npm run visreg <base_url>
-```
-`base_url`: The url of the site containing the sitemap.xml file (i.e.
-https://www.example.com)
+## Example tests
 
-To run visual regression tests on one URL:
-```bash
-npm run visreg <url>
-```
+There are also example tests along with these two you can run above to learn
+more about a11y testing using Playwright, which as a lot of powerful features
+for testing.  We've included the following so far, which are located in the
+test-examples folder:
 
-`url`: The url in this case is the actual page you'd like to test (i.e. https://www.example.com/about_us)
-
-Note: The first time you run the visual regression, it'll attempt to create
-baselines to test against.  The times after that will be actual comparisons to
-the original.
-
-### Coming soon
-
-- Prettier output of issues
+- Keyboard testing
 
 #### How to Contribute
 
