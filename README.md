@@ -2,9 +2,6 @@
 
 Recommended end-to-end accessibility testing for web projects.
 
-![Screenshot of output](./presentation/images/scan_example.png)
-![Screenshot of violations](./presentation/images/violations_example.png)
-
 ## Requirements
 
 - [nodejs: >= 16](https://nodejs.org/en)
@@ -79,6 +76,11 @@ for testing. We've included the following so far, which are located in the
 test-examples folder:
 
 - Keyboard testing
+
+## Example output
+
+![Screenshot of output](./presentation/images/scan_example.png)
+![Screenshot of violations](./presentation/images/violations_example.png)
 
 ## How to Contribute
 
