@@ -29,10 +29,10 @@ test.describe("Keyboard widget", () => {
     await page.keyboard.press(tabKey);
     // Copy/pasted selector from dev tools.
     await expect(
-      page.locator("#__docusaurus > div:nth-child(2) > a")
+      page.locator("a[href='#__docusaurus_skipToContent_fallback']")
     ).toBeFocused();
     await expect(
-      page.locator("#__docusaurus > div:nth-child(2) > a")
+      page.locator("a[href='#__docusaurus_skipToContent_fallback']")
     ).toHaveText("Skip to main content");
   });
 
