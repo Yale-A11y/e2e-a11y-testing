@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+# Quick verification script to test the fixes
+# Run this to verify all TypeScript errors are resolved
+
+echo "🔧 Testing TypeScript compilation..."
+
+# Run type checking
+npm run type-check
+
+if [ $? -eq 0 ]; then
+    echo "✅ TypeScript compilation successful!"
+    
+    echo ""
+    echo "🧪 Running linting..."
+    npm run lint
+    
+    if [ $? -eq 0 ]; then
+        echo "✅ Linting passed!"
+        
+        echo ""
+        echo "🎉 All fixes applied successfully!"
+        echo ""
+        echo "📖 Next steps:"
+        echo "   1. Test a real website: npm run a11y https://example.com"
+        echo "   2. Test visual regression: npm run visreg https://example.com"
+        echo "   3. View HTML report: npm run show-report"
+        echo ""
+    else
+        echo "❌ Linting failed. Please check the errors above."
+    fi
+else
+    echo "❌ TypeScript compilation failed. Please check the errors above."
+fi

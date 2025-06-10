@@ -138,3 +138,34 @@ dist
 # The sitemap links that you can generate
 sitemap.links
 tests/visreg-sitemap.spec.ts-snapshots/
+
+# Additional test artifacts
+*.spec.ts-snapshots/
+merged-sitemap.links
+accessibility-summary.md
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+
+# Build and dist directories
+dist/
+build/
+
+# ESLint and Prettier cache
+.eslintcache
+.prettier-cache
+
+# TypeScript compilation
+*.d.ts.map
+
+# Temporary files
+*.tmp
+*.temp

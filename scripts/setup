@@ -1,0 +1,102 @@
+#!/usr/bin/env bash
+
+# E2E Accessibility Testing Tool Setup Script
+# This script helps new users set up the testing environment
+
+set -e
+
+echo "🌟 E2E Accessibility Testing Tool Setup"
+echo "========================================"
+
+# Check Node.js version
+echo "📋 Checking prerequisites..."
+node_version=$(node --version 2>/dev/null || echo "not found")
+if [[ "$node_version" == "not found" ]]; then
+    echo "❌ Node.js is not installed. Please install Node.js >= 18.0.0"
+    echo "   Visit: https://nodejs.org/"
+    exit 1
+fi
+
+# Extract major version number
+node_major=$(echo "$node_version" | sed 's/v\([0-9]*\).*/\1/')
+if [[ "$node_major" -lt 18 ]]; then
+    echo "❌ Node.js version $node_version is too old. Please upgrade to >= 18.0.0"
+    exit 1
+fi
+
+echo "✅ Node.js $node_version is installed"
+
+# Check npm
+npm_version=$(npm --version 2>/dev/null || echo "not found")
+if [[ "$npm_version" == "not found" ]]; then
+    echo "❌ npm is not installed"
+    exit 1
+fi
+echo "✅ npm $npm_version is installed"
+
+# Check xmllint
+xmllint_version=$(xmllint --version 2>&1 | head -n1 || echo "not found")
+if [[ "$xmllint_version" == "not found" ]]; then
+    echo "⚠️  xmllint is not installed"
+    echo "   For sitemap parsing, please install xmllint:"
+    echo "   - Ubuntu/Debian: sudo apt-get install libxml2-utils"
+    echo "   - macOS: brew install libxml2"
+    echo "   - Or use the Node.js alternative: npm run sitemap-alt"
+else
+    echo "✅ xmllint is available"
+fi
+
+# Install dependencies
+echo ""
+echo "📦 Installing dependencies..."
+npm install
+
+# Verify TypeScript ESLint dependencies are installed
+echo "🔍 Verifying TypeScript ESLint installation..."
+if npm list @typescript-eslint/eslint-plugin > /dev/null 2>&1 && npm list @typescript-eslint/parser > /dev/null 2>&1; then
+    echo "✅ TypeScript ESLint dependencies verified"
+else
+    echo "⚠️  TypeScript ESLint not found, installing explicitly..."
+    npm install --save-dev @typescript-eslint/eslint-plugin@^6.21.0 @typescript-eslint/parser@^6.21.0
+fi
+
+# Install Playwright browsers
+echo ""
+echo "🌐 Installing Playwright browsers..."
+npx playwright install
+
+echo ""
+echo "🔧 Setting up configuration..."
+
+# Create .env file if it doesn't exist
+if [[ ! -f .env ]]; then
+    cp .env.example .env
+    echo "✅ Created .env file from .env.example"
+    echo "   Edit .env to customize your configuration"
+else
+    echo "ℹ️  .env file already exists"
+fi
+
+# Run initial checks
+echo ""
+echo "🧪 Running initial checks..."
+
+# Type checking
+echo "   - Type checking..."
+npm run type-check
+
+# Linting
+echo "   - Linting..."
+npm run lint || echo "✅ Linting completed (warnings are normal)"
+
+echo ""
+echo "🎉 Setup completed!"
+echo ""
+echo "📖 Quick start:"
+echo "   npm run a11y https://example.com"
+echo "   npm run visreg https://example.com/sitemap.xml"
+echo ""
+echo "📚 For detailed usage, see README.md"
+echo "🐛 For troubleshooting, see CONTRIBUTING.md"
+echo ""
+echo "Happy testing! 🚀"

@@ -1,151 +1,353 @@
-# e2e-a11y-testing
+# E2E Accessibility Testing Tool
 
-Recommended end-to-end accessibility testing for web projects.
+A comprehensive end-to-end accessibility testing tool built with Playwright and axe-core for automated WCAG compliance testing.
 
-## Requirements
+## 🌟 Features
 
-- [nodejs: >= 16](https://nodejs.org/en)
-- [npm](https://www.npmjs.com)
-- [xmllint](https://gitlab.gnome.org/GNOME/libxml2/-/wikis/home)
+- **Automated Accessibility Testing**: Uses axe-core for WCAG 2.1 AA compliance testing
+- **Sitemap Testing**: Test entire websites by parsing sitemap.xml files
+- **Visual Regression Testing**: Detect visual changes that might affect accessibility
+- **Multiple Browser Support**: Test across Chromium, Firefox, and WebKit
+- **CI/CD Ready**: GitHub Actions workflow included
+- **Detailed Reporting**: HTML reports with accessibility violation details
+- **Keyboard Navigation Testing**: Example tests for keyboard accessibility
+- **One-Command Setup**: Automated setup script handles everything
 
-## Installation
+## 📋 Requirements
 
-To install, you'll need to clone the repository locally and change to the root
-directory of it. Then run the following commands:
+- **Node.js**: >= 18.0.0
+- **npm**: Latest version
+- **xmllint**: For sitemap parsing (automatically checked during setup)
 
-### For `npm`
+## 🚀 Quick Start
+
+### **One-Command Setup** ⚡
+
+```bash
+# Clone the repository
+git clone <your-repo-url>
+cd e2e-a11y-testing
+
+# Run the automated setup (handles everything!)
+npm run setup
+```
+
+The setup script will:
+- ✅ Check all prerequisites (Node.js, npm, xmllint)
+- ✅ Install all dependencies
+- ✅ Install Playwright browsers
+- ✅ Set up configuration files
+- ✅ Run initial verification tests
+- ✅ Provide next steps
+
+### **Start Testing Immediately**
+
+After setup completes:
+
+```bash
+# Test a single page for accessibility
+npm run a11y https://example.com
+
+# Test an entire website via sitemap
+npm run a11y https://example.com/sitemap.xml
+
+# Run visual regression tests
+npm run visreg https://example.com
+```
+
+## 📖 Usage
+
+### Essential Commands
+
+```bash
+# Accessibility testing
+npm run a11y <url>              # Test single page or sitemap
+npm run visreg <url>             # Visual regression testing
+
+# Development & maintenance
+npm run setup                    # One-time setup
+npm run verify                   # Verify installation
+npm run lint                     # Check code quality
+npm run lint:fix                 # Auto-fix style issues
+npm run format                   # Format code with Prettier
+npm run type-check               # TypeScript compilation check
+
+# Advanced testing
+npm run test                     # Run all Playwright tests
+npm run test:headed              # Run tests with browser UI
+npm run test:debug               # Debug mode
+npm run show-report              # View detailed HTML reports
+```
+
+### Environment Configuration
+
+Create a `.env` file to customize defaults:
+
+```env
+# Base URL for testing
+TEST_URL=https://your-site.com
+
+# Custom timeouts (milliseconds)
+TEST_TIMEOUT=60000
+NAVIGATION_TIMEOUT=30000
+
+# Skip certain URL patterns
+SKIP_URL_PATTERNS=/admin,/login,/private
+
+# Browser preference
+BROWSER=chromium
+```
+
+### Manual Installation (Alternative)
+
+If you prefer manual setup:
 
 ```bash
 npm install
 npx playwright install
 ```
 
-## Running tests
+**Platform-specific requirements:**
 
-### Axe tests
-
-To run axe tests for a page/site:
-
+**Ubuntu/Debian:**
 ```bash
-npm run a11y <url>
+sudo apt-get update && sudo apt-get install -y libxml2-utils
 ```
 
-`url`: The url to test or the sitemap.xml to test a list of links with.
-
-### Visual regression tests
-
-To run visual regression tests for a page/site:
-
+**macOS:**
 ```bash
-npm run visreg <url>
+brew install libxml2
 ```
 
-`url`: The url to test or the sitemap.xml to test a list of links with.
+## 🧪 Test Types
 
-Note: The first time you run the visual regression, it'll attempt to create
-baselines to test against. The times after that will be actual comparisons to
-the original.
+### 1. Accessibility Tests
+- **WCAG 2.1 AA compliance** using axe-core
+- **Color contrast** validation
+- **Keyboard navigation** testing  
+- **Screen reader compatibility**
+- **Form labels and semantics**
 
-### Run multiple tests
+### 2. Visual Regression Tests
+- **Full-page screenshots** with baseline comparison
+- **Layout change detection**
+- **CSS modification tracking**
+- **Cross-browser visual consistency**
 
-To retrieve a page or a sitemap to then run tests against:
+### 3. Keyboard Navigation Tests
+- **Tab order validation**
+- **Focus management**
+- **Skip link functionality**
+- **Keyboard shortcut accessibility**
+
+## 📊 Reports and Analysis
+
+### HTML Reports
 
 ```bash
-npm run sitemap <url>
+# Generate and view comprehensive reports
+npm run test
+npm run show-report
 ```
 
-`url`: The url to test or the sitemap.xml to test a list of links with.
+Reports include:
+- **Test execution summary** with pass/fail status
+- **Detailed accessibility violations** with remediation guidance  
+- **Screenshots of failures** for visual debugging
+- **Performance metrics** and execution times
+- **Cross-browser comparison** results
 
-To manually run all tests:
+### CI/CD Integration
+
+The included GitHub Actions workflow provides:
+- **Automated testing** on push/PR
+- **Multi-browser testing** (Chrome, Firefox, Safari)
+- **Accessibility report generation**
+- **Visual regression detection**
+- **Daily scheduled tests**
+- **PR comments** with test results
+
+## ⚙️ Configuration
+
+### Accessibility Testing Configuration
+
+Modify `tests/axe-sitemap.spec.ts`:
+
+```typescript
+const axeConfig = {
+  // WCAG compliance levels
+  tags: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'],
+  
+  // Disable problematic rules (use sparingly)
+  disabledRules: ['color-contrast'], // Example
+  
+  // Test only specific areas
+  include: ['.main-content'],
+  
+  // Exclude third-party content
+  exclude: ['.third-party-widget'],
+};
+```
+
+### Test Configuration
+
+Customize test behavior:
+
+```typescript
+const testConfig = {
+  timeout: 60000,           // Test timeout
+  skipUrls: ['/admin'],     // URLs to skip
+  retries: 1,               // Retry failed tests
+};
+```
+
+## 🔧 Development
+
+### Adding New Tests
+
+```typescript
+// tests/my-custom.spec.ts
+import { test } from "@playwright/test";
+import { expect } from "@support/a11y-page";
+
+test('Custom accessibility test', async ({ page }) => {
+  await page.goto('https://example.com');
+  await expect(page).toPassAxe({ 
+    tags: ['wcag2aa'],
+    exclude: ['.advertisement'] 
+  });
+});
+```
+
+### Code Quality Tools
 
 ```bash
-npx playwright test
+# Check code quality
+npm run lint                     # ESLint for JavaScript
+npm run type-check               # TypeScript compiler
+npm run format                   # Prettier formatting
+
+# Auto-fix issues
+npm run lint:fix                 # Fix JavaScript style issues
+npm run format                   # Auto-format all files
 ```
 
-To manually run a specific test file:
+## 🐛 Troubleshooting
+
+### Common Setup Issues
+
+**Setup script fails:**
+```bash
+# Re-run setup with verbose output
+npm run setup
+
+# Or install components manually
+npm install
+npx playwright install
+```
+
+**"No sitemap links found":**
+```bash
+# Make sure to generate sitemap first
+npm run sitemap https://example.com/sitemap.xml
+npm run a11y https://example.com/sitemap.xml
+```
+
+**"xmllint command not found":**
+```bash
+# Install xmllint (the setup script will warn you)
+# Ubuntu/Debian: sudo apt-get install libxml2-utils
+# macOS: brew install libxml2
+
+# Or use the Node.js alternative
+npm run sitemap-alt https://example.com/sitemap.xml
+```
+
+**Browser installation issues:**
+```bash
+# Reinstall browsers
+npx playwright install --force
+
+# Or run setup again
+npm run setup
+```
+
+### Debug Mode
 
 ```bash
-npx playwright test <relative_path_to_file>
+# Debug specific tests
+npx playwright test --debug
+
+# Run with verbose logging
+DEBUG=pw:api npx playwright test
+
+# Run in headed mode to see browser
+npm run test:headed
 ```
 
-## Example tests
+### Verification
 
-There are also example tests along with these two you can run above to learn
-more about a11y testing using Playwright, which as a lot of powerful features
-for testing. We've included the following so far, which are located in the
-test-examples folder:
+```bash
+# Verify everything is working
+npm run verify
 
-- Keyboard testing
+# Check individual components
+npm run type-check    # TypeScript compilation
+npm run lint          # Code quality  
+npm run test         # Run a test suite
+```
 
-## Example output
+## 🤝 Contributing
 
-![Screenshot of output](./presentation/images/scan_example.png)
-![Screenshot of violations](./presentation/images/violations_example.png)
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md).
 
-## How to Contribute
+### Development Workflow
 
-We welcome contributions from the community to make this project better.
-Whether you want to report a bug, request a feature, or submit code changes, we
-appreciate your help! Please take a moment to review this guide on how to
-contribute to our repository.
-
-## Reporting Issues
-
-If you encounter a bug, have a feature request, or want to discuss something
-related to the project, please [open an
-issue](https://github.com/Yale-A11y/e2e-a11y-testing/issues) on our GitHub
-repository. When creating an issue, please provide as much detail as possible,
-including:
-
-- A clear and concise title.
-- A detailed description of the problem or suggestion.
-- Steps to reproduce the issue (if applicable).
-- Information about your environment (e.g., operating system, browser, version).
-
-This information helps us understand and address your concern more effectively.
-
-## Making Code Contributions
-
-We encourage contributions from the community in the form of code, bug fixes,
-or new features. To contribute code, follow these steps:
-
-1. Fork the repository by clicking the "Fork" button on the top right of this
-   page.
-2. Clone your forked repository to your local machine:
-
+1. Fork and clone the repository
+2. Run setup: `npm run setup`
+3. Create a feature branch
+4. Make your changes
+5. Run quality checks:
    ```bash
-   git clone https://github.com/your-username/e2e-a11y-testing.git
+   npm run verify
+   npm run lint:fix
+   npm run format
    ```
-
-3. Create a new branch for your changes:
-
+6. Test your changes:
    ```bash
-   git checkout -b my-feature-branch
+   npm run test
+   npm run a11y https://example.com
    ```
+7. Submit a pull request
 
-4. Make your changes.
-5. Test your changes thoroughly to ensure they work as expected.
-6. Commit your changes with a descriptive commit message:
+## 📄 License
 
-   ```bash
-   git commit -m "Add new feature: your feature description"
-   ```
+This project is licensed under the ISC License - see the [LICENSE](LICENSE) file for details.
 
-7. Push your changes to your forked repository:
+## 🔗 Resources
 
-   ```bash
-   git push origin my-feature-branch
-   ```
+- [Playwright Documentation](https://playwright.dev/)
+- [axe-core Rules Reference](https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md)
+- [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
+- [Web Accessibility Initiative](https://www.w3.org/WAI/)
 
-8. Open a pull request (PR) by visiting the original repository and clicking
-   the "New Pull Request" button. Provide a clear title and description for
-   your PR, explaining the changes you made.
+## 🚀 What's Next
 
-## Code Review Process
+After setup, try these example tests:
 
-Once you've submitted a pull request, our team will review your changes. We may
-provide feedback or request additional changes before merging. Please be
-patient during this process, as it may take some time.
+```bash
+# Test popular websites
+npm run a11y https://playwright.dev
+npm run a11y https://github.com
 
-Thank you for considering contributing to our project! Your help is greatly
-appreciated, and together we can make this project even better.
+# Test your own site
+npm run a11y https://your-website.com
+
+# Visual regression testing
+npm run visreg https://your-website.com
+
+# View detailed reports
+npm run show-report
+```
+
+Happy accessibility testing! 🌟

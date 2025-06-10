@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+echo "🔧 Installing TypeScript ESLint dependencies..."
+npm install --save-dev @typescript-eslint/eslint-plugin @typescript-eslint/parser
+
+echo "✅ TypeScript ESLint packages installed!"
+echo "Now run: npm run lint"

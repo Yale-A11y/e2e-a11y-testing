@@ -69,6 +69,9 @@ export const expect = baseExpect.extend({
     page: Page,
     options: {
       tags: Array<string>;
+      disabledRules?: Array<string>;
+      include?: Array<string>;
+      exclude?: Array<string>;
       options?: { timeout?: number };
       outputBuffer?: typeof violationOutput;
     },
@@ -77,8 +80,8 @@ export const expect = baseExpect.extend({
       options.outputBuffer = violationOutput;
     }
 
-    const { tags, options: axePageOptions, outputBuffer } = options;
-    const axePage = new AxePage(page, { tags, ...axePageOptions });
+    const { tags, disabledRules, include, exclude, outputBuffer } = options;
+    const axePage = new AxePage(page, { tags, disabledRules, include, exclude });
     let pass: boolean;
     let matcherResult: any;
     const expected = 0;
@@ -114,16 +117,33 @@ export const expect = baseExpect.extend({
  */
 export class AxePage {
   private readonly axeBuilder: AxeBuilder;
-  public results: AxeResults;
+  public results!: AxeResults; // Initialized in evaluate()
 
   constructor(
     public readonly page: Page,
-    public readonly options = { tags: [] as string[] },
+    public readonly options: {
+      tags?: Array<string>;
+      disabledRules?: Array<string>;
+      include?: Array<string>;
+      exclude?: Array<string>;
+    } = {},
   ) {
     let axeBuilder = new AxeBuilder({ page });
 
     if (options.tags && options.tags.length > 0) {
       axeBuilder.withTags(options.tags);
+    }
+
+    if (options.disabledRules && options.disabledRules.length > 0) {
+      axeBuilder.disableRules(options.disabledRules);
+    }
+
+    if (options.include && options.include.length > 0) {
+      axeBuilder.include(options.include);
+    }
+
+    if (options.exclude && options.exclude.length > 0) {
+      axeBuilder.exclude(options.exclude);
     }
 
     this.axeBuilder = axeBuilder;

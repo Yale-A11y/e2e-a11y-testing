@@ -1,22 +1,51 @@
 {
   "name": "e2e-a11y-testing",
   "version": "1.0.0",
-  "description": "",
+  "description": "End-to-end accessibility testing tool using Playwright and axe-core",
   "main": "index.js",
-  "scripts": {},
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "type": "module",
   "scripts": {
     "a11y": "./scripts/a11y-sitemap-test",
     "sitemap": "./scripts/retrieveSitemap",
     "sitemap-alt": "node ./sitemap.js",
-    "visreg": "./scripts/visreg-sitemap-test"
+    "visreg": "./scripts/visreg-sitemap-test",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "show-report": "playwright show-report",
+    "install-browsers": "playwright install",
+    "lint": "eslint . --ext .js",
+    "lint:fix": "eslint . --ext .js --fix",
+    "format": "prettier --write .",
+    "type-check": "tsc --noEmit",
+    "setup": "chmod +x scripts/setup && ./scripts/setup",
+    "verify": "chmod +x scripts/verify-fixes && ./scripts/verify-fixes",
+    "install-ts-eslint": "chmod +x scripts/install-ts-eslint && ./scripts/install-ts-eslint"
   },
+  "keywords": [
+    "accessibility",
+    "a11y",
+    "testing",
+    "playwright",
+    "axe-core",
+    "e2e",
+    "automated-testing"
+  ],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.37.1"
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.55.0",
+    "prettier": "^3.1.0",
+    "typescript": "^5.3.0"
   },
   "dependencies": {
-    "@axe-core/playwright": "^4.7.3"
+    "@axe-core/playwright": "^4.8.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

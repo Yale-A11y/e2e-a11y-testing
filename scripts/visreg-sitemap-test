@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [[ $1 != *.xml ]]; then
-    echo "$1" > ./links.sitemap
+    echo "$1" > ./sitemap.links
 else
     ./scripts/retrieveSitemap "$1"
 fi
